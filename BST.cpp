@@ -15,6 +15,9 @@ public:                         // setting all attributes as public
 
     node* insertBST(node* root, int val); // function to insert in the binary search tree
     void inOrderTraversal(node* root);  // function to print inorder traversal of tree
+    void searchBST(node* root, int key); // function to search in BST
+    node* deleteBST(node* root, int key); // function to delete in BST
+    node* inorderSuccessor(node* root);
 };
 
 node* node::insertBST(node* root, int val){// taking root and value as parameters
@@ -41,6 +44,57 @@ void node::inOrderTraversal(node* root){ // inorder traversal with root as param
     inOrderTraversal(root->right);// traverse right part of the tree
 }
 
+void node::searchBST(node* root, int key){
+    if(root == NULL){
+        cout<<"\nElement not found :(";
+        return ;
+    }
+    
+    if(root->data == key){
+        cout<<"\nElement "<< key <<" Found !";
+    }
+    else if(root->data > key){
+        searchBST(root->left , key);
+    }
+    else if(root->data < key){
+        searchBST(root->right , key);
+    }
+}
+
+node* node::inorderSuccessor(node* root){
+    node* curr = root;
+    while(curr != NULL && curr->left != NULL){
+        curr = curr->left;
+    }
+
+    return curr;
+}
+
+node* node::deleteBST(node* root, int key){
+    if(root->data > key){
+        deleteBST(root->left , key);
+    }
+    else if(root->data < key){
+        deleteBST(root->right , key);
+    }
+    else{
+        if(root->left == NULL){
+            node* temp = root->right;
+            free(root);
+            return temp;
+        }
+        if(root->right == NULL){
+            node* temp = root->left;
+            free(root);
+            return temp;
+        }
+        node* temp = inorderSuccessor(root->right);
+        root->data = temp->data;
+        root->right = deleteBST(root->right, temp->data);
+    }
+    return root;
+}
+
 int main(){
     node* root = NULL;
     root = root->insertBST(root,5);
@@ -49,6 +103,11 @@ int main(){
     root->insertBST(root,4);
     root->insertBST(root,2);
     root->insertBST(root,7);
+    root->inOrderTraversal(root);
+    // root->searchBST(root,1);
+    // root->searchBST(root,7);
+    // root->searchBST(root,11);
+    root->deleteBST(root,5);
     root->inOrderTraversal(root);
     return 0;
 }
