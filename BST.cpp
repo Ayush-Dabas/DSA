@@ -1,4 +1,5 @@
-#include<bits/stdc++.h>
+// #include<bits/stdc++.h>
+#include<iostream>
 using namespace std;
 
 class node{                     // class to represent the node of the tree
