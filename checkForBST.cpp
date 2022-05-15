@@ -33,9 +33,9 @@ int main(){
     // root->left = new node(2);
     // root->right = new node(3);
 
-    node *root = new node(5);
-    root->left = new node(2);
-    root->right = new node(8);
+    node *root = new node(2);
+    root->left = new node(1);
+    root->right = new node(3);
 
     if(isBST(root, NULL, NULL))
         cout << "YO\n";
